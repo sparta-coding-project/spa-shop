@@ -38,11 +38,20 @@ router
 
 router
   .route("/products/:productId")
-  .get((req, res) => {})
-  .put((req, res) => {
+  .get(async(req, res, next) => {
+    try{
+        const {productId} = req.params;
+        const specificProduct = await Products.find({_id : productId})
+        return res.status(201).json({product : specificProduct})
+    }catch(error){
+        console.error(error);
+        next();
+    }
+  })
+  .put(async(req, res) => {
     const { title, content, author, password } = req.body;
   })
-  .delete((req, res) => {
+  .delete(async(req, res) => {
     const { password } = req.body;
   });
 

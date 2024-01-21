@@ -19,6 +19,7 @@ const productsSchema = new Schema({
     },
     status: {
       type: String,
+      default: "FOR_SALE"
     },
     password: {
       type: String,

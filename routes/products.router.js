@@ -1,5 +1,6 @@
 import express from "express";
 import Products from "../schemas/products.schema.js";
+import productValidationSchema from "../validation/product.validation.js";
 
 const router = express.Router();
 
@@ -16,14 +17,19 @@ router
     }
   })
   .post(async (req, res, next) => {
+    const { error: err } = productValidationSchema.validate(req.body);
+    if (err) {
+      return res.status(400).send(err.details[0].message);
+    }
     try {
-      const { title, content, author, password } = req.body;
+      const { title, content, author, status, password } = req.body;
       // 몽고디비에 데이터 추가하기
       const createProduct = await Products.create({
         product: {
           title: title,
           content: content,
           author: author,
+          status: status,
           password: password,
         },
       });
@@ -83,11 +89,5 @@ router
         console.error(error);
     }
   });
-
-// router.route('/users/:userId')
-//   .get(async (req, res) => {
-//     const {userId} = req.params;
-//     const specificUser = 
-//   })
 
 export default router;

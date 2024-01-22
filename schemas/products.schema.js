@@ -4,7 +4,6 @@ const { Schema } = mongoose;
 
 // defaultSchema를 정의합니다.
 const productsSchema = new Schema({
-  product: {
     title: {
       type: String,
       required: true,
@@ -17,8 +16,9 @@ const productsSchema = new Schema({
       type: String,
       required: true,
     },
-    status: {
+    isSales: {
       type: String,
+      required: true,
       default: "FOR_SALE"
     },
     password: {
@@ -28,7 +28,6 @@ const productsSchema = new Schema({
       type: Date,
       default: Date.now,
     },
-  },
 });
 
 // defaultSchema를 사용하여 'Defaults'라는 이름의 mongoose 모델을 생성합니다.

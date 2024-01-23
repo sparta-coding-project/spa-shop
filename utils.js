@@ -15,9 +15,6 @@ export const hashPW = async(password) => {
 }
 
 export const checkPW = async (password, hash) => {
-    const saltRound = 10
+    const saltRound = 10;
     return await bcrypt.compare(password, hash);
 }
-
-
-

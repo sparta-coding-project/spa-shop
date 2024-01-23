@@ -53,7 +53,7 @@ router
       const specificProduct = await Products.find({ _id: productId });
       return res.status(200).json({ data: specificProduct });
     } catch (error) {
-      res.status(404).json({message: "상품 조회에 실패했습니다."})
+      res.status(404).json({ message: "상품 조회에 실패했습니다." });
       next(error);
     }
   })
@@ -71,21 +71,20 @@ router
           isSales,
         },
       };
-      if (await checkPW(password, specificProduct.password)){
+      if (await checkPW(password, specificProduct.password)) {
         await Products.updateOne({ _id: productId }, updateData);
-        return res.status(201).json({message: "상품 정보를 수정하였습니다."});
-      }else{
+        return res.status(201).json({ message: "상품 정보를 수정하였습니다." });
+      } else {
         throw new CustomError("password");
       }
-
     } catch (error) {
-      const {path} = error
-      switch(path){
+      const { path } = error;
+      switch (path) {
         case "_id":
-          return res.status(404).json({message: "상품조회에 실패했습니다."});
+          return res.status(404).json({ message: "상품조회에 실패했습니다." });
           break;
         case "password":
-          return res.status(401).json({message: "상품을 수정할 권한이 존재하지 않습니다."});
+          return res.status(401).json({ message: "상품을 수정할 권한이 존재하지 않습니다." });
           break;
       }
       next(error);
@@ -99,18 +98,18 @@ router
 
       if (await checkPW(password, specificProduct.password)) {
         await Products.deleteOne({ _id: productId });
-        return res.status(201).json({message: "상품을 삭제하였습니다."})
-      }else{
+        return res.status(201).json({ message: "상품을 삭제하였습니다." });
+      } else {
         throw new CustomError("password");
       }
     } catch (error) {
-      const {path} = error
-      switch(path){
+      const { path } = error;
+      switch (path) {
         case "_id":
-          return res.status(404).json({message: "상품조회에 실패했습니다."});
+          return res.status(404).json({ message: "상품조회에 실패했습니다." });
           break;
         case "password":
-          return res.status(401).json({message: "상품을 수정할 권한이 존재하지 않습니다."});
+          return res.status(401).json({ message: "상품을 수정할 권한이 존재하지 않습니다." });
           break;
       }
     }
